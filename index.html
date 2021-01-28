@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Compound Investment Calculator</title>
+</head>
+
+<body>
+    <main>
+        <div class="inputs">
+            <input type="text" class="principal" placeholder="Principal" value=100>
+            <input type="text" class="interest" placeholder="Interest" value=5>
+            <input type="text" class="days" placeholder="Days" value=30>
+            <button class="update">Update Chart</button>
+        </div>
+        <canvas id="chart" width="100" height="100"></canvas>
+    </main>
+
+
+    <script src="assets/js/main.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script>
+        var ctx = document.getElementById("chart").getContext("2d");
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: "line",
+
+            // The data for our dataset
+            data: {
+                labels: [],
+                datasets: [{
+                    label: "5% interest per day",
+                    backgroundColor: "rgb(15, 189, 64, 0.25)",
+                    borderColor: "rgb(15, 189, 64)",
+                    data: []
+                }]
+            },
+
+            // Configuration options go here
+            options: {}
+        });
+
+        function calc(principal, interest, day) {
+            return principal * (1 + (interest / 100)) ** day
+        }
+
+        function addData(chart, label, data) {
+            chart.data.labels.push(label);
+            chart.data.datasets.forEach((dataset) => {
+                dataset.data.push(data);
+            });
+            chart.update();
+        }
+
+        for (var day = 1; day < 31; day++) {
+            addData(chart, "Day " + day, calc(100, 5, day));
+        }
+    </script>
+</body>
+
+</html>
