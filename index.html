@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;1,100;1,300;1,400&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a699fa5281.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/css/style.css">
     <title>Compound Investment Calculator</title>
 </head>
@@ -16,10 +17,12 @@
             <input type="text" class="principal" placeholder="$$$">
             <input type="text" class="interest" placeholder="%">
             <input type="text" class="days" placeholder="Days">
-            <button class="update">Update Chart</button>
+            <button class="update">Update</button>
+            <a href="" id="download" download="chart.jpg">
+                <button class="download">Download</button>
+            </a>
         </div>
         <canvas id="chart" width="100" height="100"></canvas>
-        <a id='link' download='chart.png'>Save as Image</a>
     </main>
 
 
@@ -33,6 +36,7 @@
         let inputInterest = document.querySelector(".interest");
         let inputDays = document.querySelector(".days");
         let buttonUpdate = document.querySelector(".update");
+        let buttonDownload = document.querySelector(".download");
 
         var ctx = document.getElementById("chart").getContext("2d");
         var chart = new Chart(ctx, {
@@ -120,10 +124,14 @@
             for (var day = 1; day < totalDays + 1; day++) {
                 addData(chart, "Day " + day, calc(principal, interest, day));
             }
+        });
 
-            var url_base64 = document.getElementById('chart').toDataURL('image/png');
+        document.getElementById("download").addEventListener('click', function () {
+            var url_base64jp = document.getElementById("chart").toDataURL("image/jpg");
 
-            link.href = url_base64;
+            var a = document.getElementById("download");
+
+            a.href = url_base64jp;
         });
     </script>
 </body>
